@@ -1,9 +1,0 @@
-#!/usr/bin/env ruby
-#
-# require any libraries or just my gem 'ruby_example'
-
-# Define my opt parse methods here
-
-if __FILE__==$0
-  # Start my application with options here
-end
