@@ -1,0 +1,38 @@
+require 'rubygems'
+require 'rubygems/package_task'
+require 'rspec/core/rake_task'
+require 'cucumber'
+require 'cucumber/rake/task'
+
+spec = Gem::Specification.new do |s|
+  s.name = 'ruby_example'
+  s.description = "An example Ruby project"
+  s.author = "Chris Shumaker"
+  s.summary = "This example Ruby project includes a rakefile to package the gem and run Cucumber tests."
+  s.email = "cshumake@redhat.com"
+  s.homepage = "http://no_homepage"
+  s.rubyforge_project = "none"
+  s.version    = "0.0.1"
+  s.requirements << 'none'
+  s.platform   = Gem::Platform::RUBY
+  s.files      = FileList["{bin,docs,lib,test}/**/*"].exclude("rdoc").to_a
+  s.require_path      = "lib"
+  s.bindir = "bin"
+  s.executables << "calc"
+  s.add_dependency "cucumber"
+  s.add_dependency "rspec"
+  s.add_dependency "rake"
+end
+
+Gem::PackageTask.new(spec) do |pkg|
+  pkg.need_zip = true
+  pkg.need_tar = true
+end
+
+RSpec::Core::RakeTask.new(:spec)
+
+task :test => [:features]
+task :feature => [:features]
+Cucumber::Rake::Task.new(:features) do |t|
+  t.cucumber_opts = "features --format pretty"
+end
